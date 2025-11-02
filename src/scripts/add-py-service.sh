@@ -113,12 +113,6 @@ if [ -f "$DOCKER_COMPOSE" ]; then
     ports:
       - "$SERVICE_PORT:$SERVICE_PORT"
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:$SERVICE_PORT/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
 EOF
         echo "✓ Added $SERVICE_NAME to docker-compose.yml (port: $SERVICE_PORT)"
     else
