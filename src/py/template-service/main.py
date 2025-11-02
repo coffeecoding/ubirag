@@ -1,14 +1,21 @@
 from fastapi import FastAPI
 from config import settings
-import importlib.metadata
+import tomllib
+from pathlib import Path
 
 app = FastAPI(title=settings.service_name)
 
-# Get version from package metadata
-try:
-    __version__ = importlib.metadata.version("template-service")
-except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.1.0"  # Fallback version
+# Get version from pyproject.toml
+def get_version() -> str:
+    try:
+        pyproject_path = Path(__file__).parent / "pyproject.toml"
+        with open(pyproject_path, "rb") as f:
+            pyproject_data = tomllib.load(f)
+        return pyproject_data.get("project", {}).get("version", "unknown")
+    except Exception:
+        return "unknown"
+
+__version__ = get_version()
 
 
 @app.get("/health")
