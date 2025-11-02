@@ -1,0 +1,19 @@
+services:
+  template-service:
+    build:
+      context: .
+      dockerfile: py/template-service/Dockerfile
+    image: template-service:latest
+    container_name: template-service
+    environment:
+      - SERVICE_NAME=template-service
+      - SERVICE_PORT=7000
+    ports:
+      - "7000:7000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

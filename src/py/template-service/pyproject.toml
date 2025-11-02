@@ -1,0 +1,11 @@
+[project]
+name = "template-service"
+version = "0.1.0"
+description = "Template service for UbiRAG"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.120.4",
+    "uvicorn[standard]==0.38.0",
+    "pydantic==2.12.3",
+    "pydantic-settings==2.11.0",
+]
